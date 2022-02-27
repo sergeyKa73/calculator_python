@@ -19,6 +19,10 @@ class MyLayout(Widget):
         # create a variable that contains whatever was in the text box already
         prior = self.ids.calc_input.text
 
+        # test for error first
+        if "Error" in prior:
+            prior = ''
+
         # determine if 0 is sitting there
         if prior == '0':
             self.ids.calc_input.text = ''
@@ -74,19 +78,26 @@ class MyLayout(Widget):
     # create equals to function
     def equals(self):
         prior = self.ids.calc_input.text
-
+        # Error Handling
+        try:
+            # evaluate the math from the text box
+            answer = eval(prior)
+            # output the answer
+            self.ids.calc_input.text = str(answer)
+        except:
+            self.ids.calc_input.text = 'Error'
+        '''
         # Addition
-
         if '+' in prior:
             num_list = prior.split("+")
             answer = 0
             # loop thru our list
             for number in num_list:
                 answer += float(number)
-
+                
             # print the answer in the text box
             self.ids.calc_input.text = str(answer)
-
+        '''
 
 class CalculatorApp(App):
     def build(self):
